@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+
+        <record id="pending_sale_report_form_view" model="ir.ui.view">
+            <field name="name">pending_sale_report_form_view</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <form string="Pending Order Line" >
+                <sheet>
+                  <group colspan="4">
+                    <group col="2">
+                        <field name="order_id"/>
+                        <field name="delivery_days"/>
+                        <field name="date_order"/>
+                        <field name="commitment_date"/>
+                        
+                        <field name="product_id"/>
+                        <field name="client_order_ref"/>
+
+                    </group>
+                    <group col="2">
+
+                        <field name="date_last_mail"/>
+                        <field name="mail_qty"/>
+                        <field name="salesman_id"/>
+                        <field name="product_uom_qty"/>
+                        <field name="state"/>
+                    </group>
+                  </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+
+      <record model="ir.ui.view" id="pending_sale_report">
+        <field name="name">pending_sale_report</field>
+        <field name="model">sale.order.line</field>
+        <field name="priority">1</field>
+        <!-- <field name="inherit_id" ref="sale.view_order_form"/> -->
+        <field name="arch" type="xml">
+          <tree string="Order Lines" colors="green:state=='auth_expedition';orange:state=='expedition'">
+          <!-- <tree string="Order Lines" colors="green:state=='done';orange:state=='c';purple:state=='d';black:state=='a';blue:state=='b';grey:state in ('f', 'g');teal:state=='h'"> -->
+            <field name="order_id"/>
+            <field name="delivery_days"/>
+            <field name="date_order"/>
+            <field name="commitment_date"/>
+            
+            <field name="product_id"/>
+            <field name="client_order_ref"/>
+
+            <field name="date_last_mail"/>
+            <field name="mail_qty"/>
+            <field name="salesman_id"/>
+            <field name="product_uom_qty"/>
+            <field name="state"/>
+          </tree>
+        </field>
+      </record>
+
+
+      <!-- FILTERS -->
+        <record id="sale_order_line_filter_view" model="ir.ui.view">
+            <field name="name">sale_order_line_filter_view</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="order_id"/>
+                    <field name="delivery_days"/>
+                    <field name="date_order"/>
+                    <field name="commitment_date"/>
+                    
+                    <field name="product_id"/>
+                    <field name="client_order_ref"/>
+
+                    <field name="date_last_mail"/>
+                    <field name="mail_qty"/>
+                    <field name="salesman_id"/>
+                    <field name="product_uom_qty"/>
+
+
+                    <group expand="0" string="Group By..." >
+                        <filter string="Order" name="group_order_id" icon="terp-personal" domain="[]" context="{'group_by':'order_id'}"/>
+
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <!-- ACCION -->
+        <record id="menu_pending_sale_report_action" model="ir.actions.act_window">
+            <field name="name">Pending Sale Orders</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="pending_sale_report"/>
+            <field name="context">{'search_default_group_order_id': 1}</field>
+            <field name="domain">[('state', 'in', ('expedition', 'sale','auth_expedition'))]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+
+              </p>
+            </field>
+        </record>
+
+        <!-- MENUS -->
+        <!-- <menuitem name="Ruteo de albaranes" id="menu_vpicktree2_action" parent="stock.menu_stock_warehouse_mgmt" action="vpicktree2_action" sequence="10" groups="raloy_carta_porte.carta_porte_lectura"/> -->
+
+        <menuitem name="Pending Sale Orders" id="menu_pending_sale_report" parent="sales_team.menu_sale_report" action="menu_pending_sale_report_action" sequence="10" />
+
+    </data>
+</openerp>
