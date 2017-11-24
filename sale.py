@@ -27,13 +27,13 @@ class SaleOrderLine(models.Model):
                 rec.delivery_days = (commitment_date - date_order).days
         return
 
-    @api.multi
-    def _compute_mail_date(self):
-        #print '_compute_mail_date'
-        for rec in self:
-            message_last_post = rec.order_id.message_last_post
-            rec.date_last_mail = message_last_post
-        return
+    # @api.multi
+    # def _compute_mail_date(self):
+    #     #print '_compute_mail_date'
+    #     for rec in self:
+    #         message_last_post = rec.order_id.message_last_post
+    #         rec.date_last_mail = message_last_post
+    #     return
 
 
     @api.multi
@@ -45,6 +45,7 @@ class SaleOrderLine(models.Model):
                 for message in rec.order_id.message_ids:
                     if message.message_type in ('email','comment'):
                         qty += 1
+                        rec.date_last_mail = message.date
                 rec.mail_qty = qty
         return
 
@@ -60,7 +61,7 @@ class SaleOrderLine(models.Model):
 
     delivery_days = fields.Float('Days',compute='_compute_delivery_days')
 
-    date_last_mail = fields.Date('Date Last Mail',compute='_compute_mail_date')
+    date_last_mail = fields.Datetime('Date Last Mail',compute='_compute_mail_qty')
     mail_qty = fields.Integer('Mail Qty',compute='_compute_mail_qty')
 
     date_order = fields.Datetime('Date Order', related='order_id.date_order', readonly=True)
