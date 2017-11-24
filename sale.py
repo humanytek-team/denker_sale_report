@@ -43,7 +43,7 @@ class SaleOrderLine(models.Model):
             qty = 0
             if rec.order_id.message_ids:
                 for message in rec.order_id.message_ids:
-                    if message.message_type == 'email':
+                    if message.message_type in ('email','comment'):
                         qty += 1
                 rec.mail_qty = qty
         return
