@@ -59,6 +59,16 @@ class SaleOrderLine(models.Model):
         return
 
 
+    @api.multi
+    def _compute_remaining_qty(self):
+        #print '_compute_remaining_qty'
+        for rec in self:
+            remaining_qty = 0
+            remaining_qty = rec.product_uom_qty - rec.qty_delivered
+            rec.remaining_qty = remaining_qty
+        return
+
+
     delivery_days = fields.Float('Days',compute='_compute_delivery_days')
 
     date_last_mail = fields.Datetime('Date Last Mail',compute='_compute_mail_qty')
@@ -68,3 +78,5 @@ class SaleOrderLine(models.Model):
     #commitment_date = fields.Datetime('Commitment Date', related='order_id.commitment_date', readonly=True)
     commitment_date = fields.Datetime('Commitment Date', compute='_get_commitment_date')
     client_order_ref = fields.Char('Client order ref', related='order_id.client_order_ref', readonly=True)
+
+    remaining_qty = fields.Float('Remaining Qty',compute='_compute_remaining_qty')
