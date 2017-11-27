@@ -8,14 +8,24 @@
             <field name="model">sale.order.line</field>
             <field name="priority">1</field>
             <field name="arch" type="xml">
-                <tree string="Order Lines" colors="green:state=='auth_expedition';orange:state=='expedition'" create="false" edit="false">
-                    <field name="order_id"/>
+                <tree string="Order Lines" fonts="bold:state in ('auth_expedition','expedition')" colors="green:state=='auth_expedition';orange:state=='expedition'" create="false" edit="false" >
                     <field name="delivery_days"/>
                     <field name="date_order"/>
                     <field name="commitment_date"/>
+                    <field name="order_id" string="SO"/>
+                    <field name="client_order_ref"/>
+
+                    <field name="manufacturing_order" invisible='1'/>
+                    <field name="mo_date_start"/>
+                    <field name="mo_date_end"/>
+                    <field name="mo_source"/>
+                    <field name="mo_source_stock"/>
+                    <field name="mo_dest"/>
+                    <field name="mo_dest_stock"/>
+                    <field name="mo_stock_diff"/>
 
                     <field name="product_id"/>
-                    <field name="client_order_ref"/>
+                    
 
                     <field name="date_last_mail"/>
                     <field name="mail_qty"/>
@@ -23,16 +33,7 @@
                     <field name="remaining_qty"/>
                     <field name="qty_delivered" invisible='1'/>
                     <field name="product_uom_qty" string="Product Qty"/>
-                    <field name="mo_stock_diff"/>
-
-                    <field name="manufacturing_order"/>
-                    <field name="mo_date_start"/>
-                    <field name="mo_date_end"/>
-                    <field name="mo_source"/>
-                    <field name="mo_source_stock"/>
-                    <field name="mo_dest"/>
-                    <field name="mo_dest_stock"/>
-
+                    
                     <field name="state" invisible='1'/>
                 </tree>
             </field>

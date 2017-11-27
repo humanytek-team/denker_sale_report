@@ -18,7 +18,7 @@ msgstr ""
 #. module: denker_sale_report
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_client_order_ref
 msgid "Client order ref"
-msgstr "Referencia interna"
+msgstr "OC del cliente"
 
 #. module: denker_sale_report
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_commitment_date
@@ -126,3 +126,10 @@ msgstr "Diferencia de existencia"
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_mo_dest_stock
 msgid "Dest Stock"
 msgstr "Existencia de ubicacion destino"
+
+
+#. module: denker_sale_report
+#: model:ir.ui.view,arch_db:denker_sale_report.pending_sale_report
+#: model:ir.ui.view,arch_db:denker_sale_report.pending_sale_report_form_view
+msgid "SO"
+msgstr "Pedido de venta"
