@@ -18,27 +18,27 @@ msgstr ""
 #. module: denker_sale_report
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_client_order_ref
 msgid "Client order ref"
-msgstr "Referencia Interna"
+msgstr "Referencia interna"
 
 #. module: denker_sale_report
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_commitment_date
 msgid "Commitment Date"
-msgstr "Fecha Compromiso"
+msgstr "Fecha compromiso"
 
 #. module: denker_sale_report
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_date_last_mail
 msgid "Date Last Mail"
-msgstr "Fecha Ultimo Correo"
+msgstr "Fecha ultimo correo"
 
 #. module: denker_sale_report
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_date_order
 msgid "Date Order"
-msgstr "Fecha Pedido"
+msgstr "Fecha de pedido"
 
 #. module: denker_sale_report
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_delivery_days
 msgid "Days"
-msgstr "Dias Entrega"
+msgstr "Dias de entrega"
 
 #. module: denker_sale_report
 #: model:ir.ui.view,arch_db:denker_sale_report.sale_order_line_filter_view
@@ -48,12 +48,12 @@ msgstr "Agrupar por..."
 #. module: denker_sale_report
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_mail_qty
 msgid "Mail Qty"
-msgstr "Cantidad Correos"
+msgstr "Cantidad de correos"
 
 #. module: denker_sale_report
 #: model:ir.ui.view,arch_db:denker_sale_report.sale_order_line_filter_view
 msgid "Order"
-msgstr "Orden de Venta"
+msgstr "Orden de venta"
 
 #. module: denker_sale_report
 #: model:ir.ui.view,arch_db:denker_sale_report.pending_sale_report
@@ -85,4 +85,44 @@ msgstr "Por entregar"
 #: model:ir.ui.view,arch_db:denker_sale_report.pending_sale_report
 #: model:ir.ui.view,arch_db:denker_sale_report.pending_sale_report_form_view
 msgid "Product Qty"
-msgstr "Cantidad Producto"
+msgstr "Cantidad producto"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_mo_date_end
+msgid "MO Date Finished"
+msgstr "Fecha finalizacion de produccion"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_mo_date_start
+msgid "MO Date Start"
+msgstr "Fecha inicio de produccion"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_mo_dest
+msgid "MO Dest"
+msgstr "Ubicacion destino produccion"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_mo_source
+msgid "MO Src"
+msgstr "Ubicacion fuente produccion"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_manufacturing_order
+msgid "Manufacturing Order"
+msgstr "Orden de produccion"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_mo_source_stock
+msgid "Src Stock"
+msgstr "Existencia ubicacion"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_mo_stock_diff
+msgid "Stock Difference"
+msgstr "Diferencia de existencia"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_mo_dest_stock
+msgid "Dest Stock"
+msgstr "Existencia de ubicacion destino"
