@@ -8,8 +8,10 @@
             <field name="model">sale.order.line</field>
             <field name="priority">1</field>
             <field name="arch" type="xml">
-                <tree string="Order Lines" fonts="bold:state in ('auth_expedition','expedition')" colors="green:state=='auth_expedition';orange:state=='expedition'" create="false" edit="false" >
+                <tree string="Order Lines" fonts="bold:state in ('auth_expedition','expedition');bold:late==True" colors="red:late==True;green:state=='auth_expedition';orange:state=='expedition'" create="false" edit="false" >
                     <field name="delivery_days"/>
+                    <field name="days_to_date" invisible='1'/>
+                    <field name="late" invisible='1'/>
                     <field name="date_order"/>
                     <field name="commitment_date"/>
                     <field name="order_id" string="SO"/>

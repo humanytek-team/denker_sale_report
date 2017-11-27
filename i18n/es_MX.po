@@ -133,3 +133,13 @@ msgstr "Existencia de ubicacion destino"
 #: model:ir.ui.view,arch_db:denker_sale_report.pending_sale_report_form_view
 msgid "SO"
 msgstr "Pedido de venta"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_days_to_date
+msgid "Days to Date"
+msgstr "Dias actuales"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_late
+msgid "Late"
+msgstr "Atrasado"

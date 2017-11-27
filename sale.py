@@ -12,7 +12,7 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _compute_delivery_days(self):
-        print '_compute_delivery_days'
+        #print '_compute_delivery_days'
         for rec in self:
             #print '-----------'
             date_order = rec.order_id.date_order
@@ -27,18 +27,10 @@ class SaleOrderLine(models.Model):
                 rec.delivery_days = (commitment_date - date_order).days
         return
 
-    # @api.multi
-    # def _compute_mail_date(self):
-    #     #print '_compute_mail_date'
-    #     for rec in self:
-    #         message_last_post = rec.order_id.message_last_post
-    #         rec.date_last_mail = message_last_post
-    #     return
-
 
     @api.multi
     def _compute_mail_qty(self):
-        print '_compute_mail_qty'
+        #print '_compute_mail_qty'
         for rec in self:
             qty = 0
             if rec.order_id.message_ids:
@@ -51,7 +43,7 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _get_commitment_date(self):
-        print '_get_commitment_date'
+        #print '_get_commitment_date'
         for rec in self:
             if rec.order_id.commitment_date:
                 #print 'entro'
@@ -61,7 +53,7 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _compute_remaining_qty(self):
-        print '_compute_remaining_qty'
+        #print '_compute_remaining_qty'
         for rec in self:
             remaining_qty = 0
             remaining_qty = rec.product_uom_qty - rec.qty_delivered
@@ -70,7 +62,7 @@ class SaleOrderLine(models.Model):
 
     @api.multi
     def _compute_manufacturing_order(self):
-        print '_compute_manufacturing_order'
+        #print '_compute_manufacturing_order'
         MrpProduction = self.env['mrp.production']
         data = MrpProduction.search([('origin', 'in', [x.order_id.name for x in self])] )
         mapped_data = dict([(m.origin, m) for m in data])
@@ -104,9 +96,11 @@ class SaleOrderLine(models.Model):
         return
 
 
+
+
     @api.multi
     def _compute_mo_stock_diff(self):
-        print '_compute_mo_stock_diff'
+        #print '_compute_mo_stock_diff'
         for rec in self:
             #CALCULATE TOTAL STOCK
             res = rec.product_id._compute_quantities_dict\
@@ -114,6 +108,25 @@ class SaleOrderLine(models.Model):
                  self._context.get('from_date'), self._context.get('to_date'))
             rec.mo_stock_diff = res[rec.product_id.id]['qty_available'] - rec.product_uom_qty
 
+        return
+
+
+    @api.multi
+    def _compute_days_to_date(self):
+        #print '_compute_days_to_date'
+        for rec in self:
+            now = str(datetime.now())
+            now = now.split('.')[0]
+            now = datetime.strptime(str(now),"%Y-%m-%d %H:%M:%S")
+            days_to_date = 0
+
+            if rec.date_order:
+                date_order = datetime.strptime(str(rec.date_order),"%Y-%m-%d %H:%M:%S")
+
+                days_to_date = (now - date_order).days
+            rec.days_to_date = days_to_date
+            if days_to_date > rec.delivery_days:
+                rec.late = True
         return
 
 
@@ -135,3 +148,6 @@ class SaleOrderLine(models.Model):
     mo_source_stock = fields.Float('Src Stock',compute='_compute_manufacturing_order',readonly=True)
     mo_dest_stock = fields.Float('Dest Stock',compute='_compute_manufacturing_order',readonly=True)
     mo_stock_diff = fields.Float('Stock Difference',compute='_compute_mo_stock_diff',readonly=True)
+
+    days_to_date = fields.Float('Days to Date',compute='_compute_days_to_date')
+    late = fields.Boolean('Late',compute='_compute_days_to_date')
