@@ -143,3 +143,8 @@ msgstr "Dias actuales"
 #: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_late
 msgid "Late"
 msgstr "Atrasado"
+
+#. module: denker_sale_report
+#: model:ir.model.fields,field_description:denker_sale_report.field_sale_order_line_int_product_qty
+msgid "Product qty"
+msgstr "Cantidad producto"

@@ -12,8 +12,9 @@
                     <field name="delivery_days"/>
                     <field name="days_to_date" invisible='1'/>
                     <field name="late" invisible='1'/>
-                    <field name="date_order"/>
-                    <field name="commitment_date"/>
+                    <field name="date_order" widget='date'/>
+                    <field name="commitment_date" widget='date'/>
+                    <field name="order_partner_id"/>
                     <field name="order_id" string="SO"/>
                     <field name="client_order_ref"/>
 
@@ -29,12 +30,13 @@
                     <field name="product_id"/>
                     
 
-                    <field name="date_last_mail"/>
+                    <field name="date_last_mail" widget='date'/>
                     <field name="mail_qty"/>
                     <field name="salesman_id"/>
                     <field name="remaining_qty"/>
                     <field name="qty_delivered" invisible='1'/>
-                    <field name="product_uom_qty" string="Product Qty"/>
+                    <field name="int_product_qty"/>
+                    <!-- <field name="product_uom_qty" string="Product Qty"/> -->
                     
                     <field name="state" invisible='1'/>
                 </tree>
@@ -51,6 +53,7 @@
                     <group colspan="4">
                         <group col="2">
                             <field name="order_id"/>
+                            <field name="order_partner_id"/>
                             <field name="state" invisible='1'/>
                             
                             <field name="delivery_days"/>
@@ -66,7 +69,8 @@
                             <field name="product_id"/>
                             <field name="qty_delivered"/>
                             <field name="remaining_qty"/>
-                            <field name="product_uom_qty" string="Product Qty"/>
+                            <field name="int_product_qty"/>
+                            <!-- <field name="product_uom_qty" string="Product Qty"/> -->
                             <field name="mo_stock_diff"/>
                         </group>
                     </group>
@@ -114,7 +118,7 @@
                     <field name="salesman_id"/>
                     <field name="qty_delivered"/>
                     <field name="product_uom_qty"/>
-
+                    <field name="int_product_qty"/>
 
                     <group expand="0" string="Group By..." >
                         <filter string="Order" name="group_order_id" icon="terp-personal" domain="[]" context="{'group_by':'order_id'}"/>

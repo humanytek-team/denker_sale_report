@@ -24,7 +24,9 @@ class SaleOrderLine(models.Model):
                 date_order = datetime.strptime(str(date_order),"%Y-%m-%d %H:%M:%S")
                 commitment_date = datetime.strptime(str(commitment_date),"%Y-%m-%d %H:%M:%S")
 
-                rec.delivery_days = (commitment_date - date_order).days
+                days = int((commitment_date - date_order).days)
+
+                rec.delivery_days = days
         return
 
 
@@ -123,31 +125,49 @@ class SaleOrderLine(models.Model):
             if rec.date_order:
                 date_order = datetime.strptime(str(rec.date_order),"%Y-%m-%d %H:%M:%S")
 
-                days_to_date = (now - date_order).days
+                days = int((now - date_order).days)
+
+                days_to_date = days
             rec.days_to_date = days_to_date
             if days_to_date > rec.delivery_days:
                 rec.late = True
         return
 
 
-    delivery_days = fields.Float('Days',compute='_compute_delivery_days')
+    @api.multi
+    def _compute_int_product_qty(self):
+        #print '_compute_int_product_qty'
+        for rec in self:
+            rec.int_product_qty = rec.product_uom_qty
+        return
+
+    #delivery_days = fields.Float('Days',compute='_compute_delivery_days')
+    delivery_days = fields.Integer('Days',compute='_compute_delivery_days')
 
     date_last_mail = fields.Datetime('Date Last Mail',compute='_compute_mail_qty')
     mail_qty = fields.Integer('Mail Qty',compute='_compute_mail_qty')
 
     date_order = fields.Datetime('Date Order', related='order_id.date_order', readonly=True)
+    #date_order = fields.Date('Date Order', compute='_compute_date_order', readonly=True)
+
     commitment_date = fields.Datetime('Commitment Date', compute='_get_commitment_date')
     client_order_ref = fields.Char('Client order ref', related='order_id.client_order_ref', readonly=True)
-    remaining_qty = fields.Float('Remaining Qty',compute='_compute_remaining_qty')
+    #remaining_qty = fields.Float('Remaining Qty',compute='_compute_remaining_qty')
+    remaining_qty = fields.Integer('Remaining Qty',compute='_compute_remaining_qty')
 
     manufacturing_order = fields.Many2one('mrp.production','Manufacturing Order',compute='_compute_manufacturing_order',readonly=True)
     mo_date_start = fields.Date('MO Date Start',compute='_compute_manufacturing_order',readonly=True)
     mo_date_end = fields.Date('MO Date Finished',compute='_compute_manufacturing_order',readonly=True)
     mo_source = fields.Many2one('stock.location','MO Src',compute='_compute_manufacturing_order',readonly=True)
     mo_dest = fields.Many2one('stock.location','MO Dest',compute='_compute_manufacturing_order',readonly=True)
-    mo_source_stock = fields.Float('Src Stock',compute='_compute_manufacturing_order',readonly=True)
-    mo_dest_stock = fields.Float('Dest Stock',compute='_compute_manufacturing_order',readonly=True)
-    mo_stock_diff = fields.Float('Stock Difference',compute='_compute_mo_stock_diff',readonly=True)
+    #mo_source_stock = fields.Float('Src Stock',compute='_compute_manufacturing_order',readonly=True)
+    mo_source_stock = fields.Integer('Src Stock',compute='_compute_manufacturing_order',readonly=True)
+    #mo_dest_stock = fields.Float('Dest Stock',compute='_compute_manufacturing_order',readonly=True)
+    mo_dest_stock = fields.Integer('Dest Stock',compute='_compute_manufacturing_order',readonly=True)
+    #mo_stock_diff = fields.Float('Stock Difference',compute='_compute_mo_stock_diff',readonly=True)
+    mo_stock_diff = fields.Integer('Stock Difference',compute='_compute_mo_stock_diff',readonly=True)
 
-    days_to_date = fields.Float('Days to Date',compute='_compute_days_to_date')
+    #days_to_date = fields.Float('Days to Date',compute='_compute_days_to_date')
+    days_to_date = fields.Integer('Days to Date',compute='_compute_days_to_date')
     late = fields.Boolean('Late',compute='_compute_days_to_date')
+    int_product_qty = fields.Integer('Product qty',compute='_compute_int_product_qty')
