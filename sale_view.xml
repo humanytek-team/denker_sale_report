@@ -16,6 +16,9 @@
                     <field name="commitment_date" widget='date'/>
                     <field name="order_partner_id"/>
                     <field name="order_id" string="SO"/>
+
+                    <field name="order_delivered"/>
+
                     <field name="client_order_ref"/>
 
                     <field name="manufacturing_order" invisible='1'/>
@@ -137,7 +140,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="pending_sale_report"/>
             <field name="context">{'search_default_group_order_id': 1}</field>
-            <field name="domain">[('state', 'in', ('expedition', 'sale','auth_expedition'))]</field>
+            <field name="domain">[('state','in',('expedition', 'sale','auth_expedition')),('order_delivered','=',False)]</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
 

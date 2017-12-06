@@ -5,9 +5,38 @@ from datetime import datetime, timedelta, date
 import pytz
 
 
+# class SaleOrder(models.Model):
+#     _inherit = "sale.order"
+
+
+#     @api.multi
+#     @api.depends()
+#     def _compute_delivered(self):
+#         #print '_compute_delivered'
+        
+#         for rec in self:
+#             delivered = True
+#             if rec.order_line:
+#                 for line in rec.order_line:
+#                     # print '----'
+#                     # print 'rec.name: ',rec.name
+#                     # print 'line.product_id.name: ',line.product_id.name
+#                     # print 'line.product_uom_qty : ',line.product_uom_qty 
+#                     # print 'line.qty_delivered : ',line.qty_delivered 
+#                     if not (line.product_uom_qty - line.qty_delivered) == 0:
+#                         #print 'not delivered'
+#                         delivered = False
+#             else:
+#                 delivered = False
+#             rec.delivered = delivered
+#         return
+
+#     delivered = fields.Boolean('Delivered', compute='_compute_delivered',default=False,)
+
+
+
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
-
 
 
     @api.multi
@@ -141,6 +170,31 @@ class SaleOrderLine(models.Model):
             rec.int_product_qty = rec.product_uom_qty
         return
 
+
+    @api.multi
+    @api.depends('product_uom_qty','qty_delivered')
+    def _compute_order_delivered(self):
+        print '_compute_order_delivered'
+        
+        for rec in self:
+            delivered = False
+            #print 'delivered1: ',delivered
+            if rec.order_id:
+                delivered = True
+                for line in rec.order_id.order_line:
+                    # print '----'
+                    # print 'rec.order_id.name: ',rec.order_id.name
+                    # print 'line.product_id.name: ',line.product_id.name
+                    # print 'line.product_uom_qty : ',line.product_uom_qty 
+                    # print 'line.qty_delivered : ',line.qty_delivered 
+                    if not (line.product_uom_qty - line.qty_delivered) == 0:
+                        print 'not delivered'
+                        delivered = False
+            #print 'delivered2: ',delivered
+            rec.order_delivered = delivered
+        return
+
+
     #delivery_days = fields.Float('Days',compute='_compute_delivery_days')
     delivery_days = fields.Integer('Days',compute='_compute_delivery_days')
 
@@ -148,6 +202,7 @@ class SaleOrderLine(models.Model):
     mail_qty = fields.Integer('Mail Qty',compute='_compute_mail_qty')
 
     date_order = fields.Datetime('Date Order', related='order_id.date_order', readonly=True)
+    order_delivered = fields.Boolean('Order delivered', compute='_compute_order_delivered',readonly=True, store=True)
     #date_order = fields.Date('Date Order', compute='_compute_date_order', readonly=True)
 
     commitment_date = fields.Datetime('Commitment Date', compute='_get_commitment_date')
