@@ -17,7 +17,7 @@
                     <field name="order_partner_id"/>
                     <field name="order_id" string="SO"/>
 
-                    <field name="order_delivered"/>
+                    <field name="order_delivered" invisible='1'/>
 
                     <field name="client_order_ref"/>
 
